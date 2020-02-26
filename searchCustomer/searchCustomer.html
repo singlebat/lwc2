@@ -1,0 +1,103 @@
+<template>
+<lightning-card variant="narrow" icon-name="standard:search" title="顧客検索画面">
+    
+
+    <lightning-button label="リセット" slot="actions" onclick={doClear}></lightning-button>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+        <!--<div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-2">-->
+            <lightning-input type="text" name="input1" value={name1} label="姓（カナ）" ></lightning-input>
+        </lightning-layout-item>   
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+            <lightning-input type="text" name="input2" value={name2} label="名（カナ）" ></lightning-input>
+        </lightning-layout-item> 
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+            <lightning-combobox
+                            name="gender"
+                            label="性別"
+                            value={gender}
+                            placeholder="Select gender"
+                            options={genders}
+                            onchange={handleChange} >
+            </lightning-combobox>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+            <lightning-input type="date" name="input4"  label="生年月日" value={Birth} onchange={BirthChange} ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+            <lightning-input type="tel" label="電話番号" value={phone2} name="phone2" ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+            <lightning-input type="email" value={email} label="メールアドレス"></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+            <lightning-input type="text" value={MailingAddress} name="adress" label="住所" ></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" small-device-size="6" medium-device-size="4" large-device-size="3" padding="around-small">
+            <lightning-combobox
+                            name="status"
+                            label="ステータス"
+                            value={status}
+                            placeholder="Select status"
+                            options={statusOp}
+                            onchange={statusChange} >
+            </lightning-combobox>
+        </lightning-layout-item>
+        <!--</div>
+        </div>-->
+    </lightning-layout>
+
+    <div class="slds-p-left_medium slds-p-top_medium">
+        <lightning-button label="顧客検索" slot="actions" onclick={doSearch}></lightning-button>
+    </div>
+    <div class="slds-p-left_medium slds-p-top_medium" if:true={HaveData}>
+        <p>検索結果</p>
+
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+            <thead>
+               <tr class="slds-line-height_reset">
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="First Name">NO</div>
+                  </th>
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Last Name">名前</div>
+                  </th>
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Phone">生年月日</div>
+                  </th>
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Email">住所</div>
+                  </th>
+               </tr>
+            </thead>
+            
+            <tbody>
+               <!--iterate all contact records using for-each iteration -->    
+               <template for:each={contacts} for:item="contact">
+                  <tr class="slds-hint-parent" key={contact.Id}>
+                     <td>
+                        <div class="slds-truncate">{contact.Id}</div>
+                     </td>
+                     <td>
+                        <div class="slds-truncate">
+                            <a data-id={contact.Id} onclick={jumpto}>
+                            {contact.Name}
+                            </a>
+                        </div>
+                     </td>
+                     <td>
+                        <div class="slds-truncate">{contact.Birthdate}</div>
+                     </td>
+                     <td>
+                        <div class="slds-truncate">{contact.MailingAddress}</div>
+                     </td>
+                  </tr>
+               </template>
+            </tbody>
+         </table>
+
+    </div>
+ 
+</lightning-card>
+</template>
